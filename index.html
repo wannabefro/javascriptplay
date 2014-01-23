@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="style.css" title="" type="" />
+  <title>Write Some Javascript</title>
+  
+</head>
+<body>
+<div data-question="1" class="question">
+  <p>Write a function that averages the numbers in an array. Call the function average.</p>
+</div>
+<div id="editor"></div>
+<button onclick="getCode()">Run Code</button>
+<div id="result"></div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<script src="ace/ace.js" type="text/javascript" charset="utf-8">
+<script src="main.js"></script>
+<script>
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/twilight");
+  editor.getSession().setMode("ace/mode/javascript");
+</script>
+<script src="evalCode.js"></script>
+</body>
+</html>
