@@ -6,15 +6,16 @@ function getCode(){
 };
 
 function checkAnswer(code, question){
-  testInput = getQuestionInput(question);
-  testOutput = getQuestionOutput(question);
+  question = findQuestion();
+  testInput = question.testInput;
+  testOutput = question.testOutput;
   try {
     eval(code);
   } catch(error) {
     $('#result').html('<h1>Sorry something went wrong</h1><p>Error: ' + error.message + '</p>');
     return false;
   }
-  var questionFunction = getQuestionFunctionName(question);
+  var questionFunction = question.method;
   var isDefined = eval('(typeof ' + questionFunction + '==\'function\');');
   if (!isDefined){
     $('#result').html("<h1>You didn't define a " + questionFunction + " function.");
@@ -22,6 +23,9 @@ function checkAnswer(code, question){
   }
   var results = testInput.map(function(input){
     var expectedResult = testOutput[testInput.indexOf(input)];
+    if (input instanceof Array){
+      input = '['+input+']';
+    }
     var result = eval(questionFunction + '('+input+')');
     if (expectedResult == result){
       return true;
@@ -45,16 +49,4 @@ function checkResults(results){
     $('#result').append('</ul>');
   }
     failingTests = [];
-}
-
-function getQuestionFunctionName(question){
-  return 'average'
-}
-
-function getQuestionInput(question){
-  return [[1,2,3], [1,1,1],[1.5,2.5,5]];
-}
-
-function getQuestionOutput(question){
-  return [2,1,3];
 }
