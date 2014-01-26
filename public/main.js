@@ -1,8 +1,22 @@
 var currentQuestion;
 
-function getQuestion(){
-  $.getJSON('questions.json', function(data){
-    var question = _.sample(data.questions);
+function getQuestion(options){
+  var question;
+  fileName = (options.fileName != null) ? options.fileName : 'questions.json';
+  questionType = (options.type != null) ? options.type : null;
+  $.getJSON(fileName, function(data){
+    if (options.choice || questionType){
+      var searchResults = jQuery.grep(data.questions, function(q){
+        if (options.choice){
+          return (q.id === options.choice);
+        } else if (questionType){
+          return (q.type = questionType);
+        }
+      });
+      question = _.sample(searchResults);
+    } else {
+      question = _.sample(data.questions);
+    }
     addQuestion(question);
   });
 }
